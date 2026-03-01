@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "practice-jsonplaceholder",
+		"name": "Practice",
+		"description": "Практика Postman — JSONPlaceholder API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts"]
+				},
+				"description": "Часть 1 — GET без параметров"
+			}
+		},
+		{
+			"name": "Get post by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Custom-Header",
+						"value": "hello",
+						"description": "Часть 3 — пример кастомного заголовка"
+					}
+				],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts?id=3",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts"],
+					"query": [
+						{
+							"key": "id",
+							"value": "3",
+							"description": "Попробуй поменять на 99"
+						}
+					]
+				},
+				"description": "Часть 2 — GET с query-параметром id (через Params)"
+			}
+		},
+		{
+			"name": "Create post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Мой первый пост\",\n  \"body\": \"Текст поста\",\n  \"userId\": 1\n}"
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts"]
+				},
+				"description": "Часть 4 — POST с JSON-телом"
+			}
+		},
+		{
+			"name": "Update post",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 1,\n  \"title\": \"Обновлённый заголовок\",\n  \"body\": \"Обновлённый текст поста\",\n  \"userId\": 1\n}"
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts", "1"]
+				},
+				"description": "Часть 5 — PUT с обновлёнными данными"
+			}
+		},
+		{
+			"name": "Delete post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts", "1"]
+				},
+				"description": "Часть 5 — DELETE запрос"
+			}
+		},
+		{
+			"name": "Authorized request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "my-secret-token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": ["jsonplaceholder", "typicode", "com"],
+					"path": ["posts", "1"]
+				},
+				"description": "Часть 6 — GET с Bearer Token"
+			}
+		}
+	]
+}
