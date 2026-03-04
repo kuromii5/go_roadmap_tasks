@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
+    env_file: .env
+    environment:
+      DB_HOST: postgres
+      REDIS_ADDR: redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: snapbin
+      POSTGRES_PASSWORD: snapbin
+      POSTGRES_DB: snapbin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U snapbin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:8.6-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
