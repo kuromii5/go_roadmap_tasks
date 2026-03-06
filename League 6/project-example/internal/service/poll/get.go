@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kuromii5/snapbin/internal/domain"
+	"github.com/kuromii5/poller/internal/domain"
 )
 
 func (s *Service) Get(ctx context.Context, id string) (*domain.PollResult, error) {

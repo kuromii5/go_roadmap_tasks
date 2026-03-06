@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/kuromii5/snapbin/internal/service/poll"
+	"github.com/kuromii5/poller/internal/service/poll"
 )
 
 type createRequest struct {

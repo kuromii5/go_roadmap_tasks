@@ -6,7 +6,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN go build -o snapbin ./cmd
+RUN go build -o poller ./cmd
 
 # ---
 
@@ -14,9 +14,9 @@ FROM alpine:3.23
 
 WORKDIR /app
 
-COPY --from=builder /app/snapbin .
+COPY --from=builder /app/poller .
 COPY --from=builder /app/migrations ./migrations
 
 EXPOSE 8080
 
-CMD ["./snapbin"]
+CMD ["./poller"]

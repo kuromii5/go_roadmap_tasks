@@ -1,6 +1,6 @@
 # Binary
 bin/
-snapbin
+poller
 
 # Environment
 .env

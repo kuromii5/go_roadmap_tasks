@@ -9,7 +9,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"github.com/kuromii5/snapbin/internal/domain"
+	"github.com/kuromii5/poller/internal/domain"
 )
 
 type Cache struct {

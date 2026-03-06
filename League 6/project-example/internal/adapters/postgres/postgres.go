@@ -10,8 +10,8 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
 
-	"github.com/kuromii5/snapbin/config"
-	"github.com/kuromii5/snapbin/internal/domain"
+	"github.com/kuromii5/poller/config"
+	"github.com/kuromii5/poller/internal/domain"
 )
 
 type DB struct {

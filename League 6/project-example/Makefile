@@ -4,7 +4,7 @@ run:
 	go run ./cmd
 
 build:
-	go build -o bin/snapbin ./cmd
+	go build -o bin/poller ./cmd
 
 migrate-up:
 	goose -dir migrations postgres "$$DATABASE_URL" up

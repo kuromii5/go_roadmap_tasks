@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/kuromii5/snapbin/internal/handlers/health"
-	"github.com/kuromii5/snapbin/internal/handlers/middleware"
-	pollhandler "github.com/kuromii5/snapbin/internal/handlers/poll"
+	"github.com/kuromii5/poller/internal/handlers/health"
+	"github.com/kuromii5/poller/internal/handlers/middleware"
+	pollhandler "github.com/kuromii5/poller/internal/handlers/poll"
 )
 
 func NewRouter(pollH *pollhandler.Handler, healthH *health.Handler, limiter middleware.Limiter) http.Handler {

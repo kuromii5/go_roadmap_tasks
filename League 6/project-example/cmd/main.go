@@ -14,13 +14,13 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/pressly/goose/v3"
 
-	"github.com/kuromii5/snapbin/config"
-	"github.com/kuromii5/snapbin/internal/adapters/postgres"
-	redisadapter "github.com/kuromii5/snapbin/internal/adapters/redis"
-	"github.com/kuromii5/snapbin/internal/handlers"
-	healthhandler "github.com/kuromii5/snapbin/internal/handlers/health"
-	pollhandler "github.com/kuromii5/snapbin/internal/handlers/poll"
-	pollservice "github.com/kuromii5/snapbin/internal/service/poll"
+	"github.com/kuromii5/poller/config"
+	"github.com/kuromii5/poller/internal/adapters/postgres"
+	redisadapter "github.com/kuromii5/poller/internal/adapters/redis"
+	"github.com/kuromii5/poller/internal/handlers"
+	healthhandler "github.com/kuromii5/poller/internal/handlers/health"
+	pollhandler "github.com/kuromii5/poller/internal/handlers/poll"
+	pollservice "github.com/kuromii5/poller/internal/service/poll"
 )
 
 func main() {

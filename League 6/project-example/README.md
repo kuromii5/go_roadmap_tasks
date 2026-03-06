@@ -1,4 +1,4 @@
-# Poll Service
+# Poller
 
 Сервис для создания опросов с ограниченным временем жизни. Создаёшь опрос с вариантами ответов — получаешь ссылку. Участники голосуют (один голос с одного IP). Опрос автоматически удаляется после истечения TTL.
 
@@ -29,7 +29,7 @@ make compose-up
 | `DB_PORT`       | `5432`            | Порт PostgreSQL                 |
 | `DB_USER`       | `postgres`        | Пользователь БД                 |
 | `DB_PASSWORD`   | —                 | Пароль БД (обязательно)         |
-| `DB_NAME`       | `snapbin`         | Имя базы данных                 |
+| `DB_NAME`       | `poller`         | Имя базы данных                 |
 | `DB_SSLMODE`    | `disable`         | SSL режим                       |
 | `REDIS_ADDR`    | `localhost:6379`  | Адрес Redis                     |
 | `REDIS_PASSWORD`| —                 | Пароль Redis (если нужен)       |
@@ -210,11 +210,11 @@ Redis-кэш инвалидируется после каждого голоса
 # Локальный запуск (PostgreSQL и Redis должны быть запущены)
 make run
 
-# Сборка бинаря в ./bin/snapbin
+# Сборка бинаря в ./bin/poller
 make build
 
 # Миграции вручную
-export DATABASE_URL="postgres://snapbin:snapbin@localhost:5432/snapbin?sslmode=disable"
+export DATABASE_URL="postgres://poller:poller@localhost:5432/poller?sslmode=disable"
 make migrate-up
 make migrate-down
 

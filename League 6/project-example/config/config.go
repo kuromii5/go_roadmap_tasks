@@ -20,7 +20,7 @@ type DBConfig struct {
 	Port     string `env:"DB_PORT"     envDefault:"5432"`
 	User     string `env:"DB_USER"     envDefault:"postgres"`
 	Password string `env:"DB_PASSWORD,required"`
-	Name     string `env:"DB_NAME"     envDefault:"snapbin"`
+	Name     string `env:"DB_NAME"     envDefault:"poller"`
 	SSLMode  string `env:"DB_SSLMODE"  envDefault:"disable"`
 }
 

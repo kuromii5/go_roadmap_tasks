@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/kuromii5/snapbin/internal/domain"
+	"github.com/kuromii5/poller/internal/domain"
 )
 
 type optionResponse struct {

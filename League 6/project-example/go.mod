@@ -1,4 +1,4 @@
-module github.com/kuromii5/snapbin
+module github.com/kuromii5/poller
 
 go 1.26
 

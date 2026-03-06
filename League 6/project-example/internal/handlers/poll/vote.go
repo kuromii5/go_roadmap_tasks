@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/kuromii5/snapbin/internal/domain"
+	"github.com/kuromii5/poller/internal/domain"
 )
 
 type voteRequest struct {
