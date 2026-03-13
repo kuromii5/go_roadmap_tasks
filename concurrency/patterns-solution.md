@@ -278,10 +278,10 @@ func main() {
     success, failed := 0, 0
     for r := range results {
         if r.Err != nil {
-            fmt.Printf("❌ task %d failed: %v\n", r.TaskID, r.Err)
+            fmt.Printf("task %d failed: %v\n", r.TaskID, r.Err)
             failed++
         } else {
-            fmt.Printf("✅ task %d done: %d bytes in %v\n", r.TaskID, r.Size, r.Elapsed)
+            fmt.Printf("task %d done: %d bytes in %v\n", r.TaskID, r.Size, r.Elapsed)
             success++
         }
     }
@@ -653,10 +653,10 @@ func main() {
     success, failed := 0, 0
     for r := range pool.Results() {
         if r.Err != nil {
-            fmt.Printf("❌ job %d failed after %d retries: %v\n", r.JobID, r.Retries, r.Err)
+            fmt.Printf("job %d failed after %d retries: %v\n", r.JobID, r.Retries, r.Err)
             failed++
         } else {
-            fmt.Printf("✅ job %d done (retries=%d): %s\n", r.JobID, r.Retries, r.Output)
+            fmt.Printf("job %d done (retries=%d): %s\n", r.JobID, r.Retries, r.Output)
             success++
         }
     }
