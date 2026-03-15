@@ -1,4 +1,4 @@
-# 🔑 Решения — PostgreSQL + Go (sqlx)
+# Решение — PostgreSQL
 
 ---
 

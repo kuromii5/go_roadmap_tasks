@@ -1,4 +1,4 @@
-# 🔑 Решения — Docker + docker-compose
+# Решение — Docker
 
 ---
 

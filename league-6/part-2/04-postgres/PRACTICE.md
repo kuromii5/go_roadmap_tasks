@@ -1,4 +1,4 @@
-# 🐘 PostgreSQL + Go
+# Практика — PostgreSQL
 
 > **Видео:** [PostgreSQL и Go](https://youtu.be/MNyNxloZR0k?t=7508)
 
@@ -8,7 +8,7 @@
 
 В видео ты увидишь работу через стандартный `database/sql`. Он работает, но в продакшене почти все Go-проекты используют **[jmoiron/sqlx](https://github.com/jmoiron/sqlx)** — обёртку поверх `database/sql`, которая убирает боль.
 
-### Зачем sqlx, если есть database/sql?
+**Зачем sqlx, если есть database/sql?**
 
 Стандартная библиотека заставляет руками перечислять каждое поле в `Scan`:
 
@@ -26,7 +26,7 @@ var p Product
 err := db.Get(&p, "SELECT * FROM products WHERE id = $1", id)
 ```
 
-### Что даёт sqlx
+**Что даёт sqlx:**
 
 - `Get` — одна строка → структура
 - `Select` — много строк → слайс структур
@@ -34,16 +34,16 @@ err := db.Get(&p, "SELECT * FROM products WHERE id = $1", id)
 - `StructScan` — маппинг через теги `db:"column_name"`
 - Полная совместимость с `database/sql` — `sqlx.DB` оборачивает `sql.DB` внутри
 
-### Кто использует
+**Кто использует:**
 
 `sqlx` — стандарт де-факто в Go-проектах. 16k+ звёзд на GitHub. Используется в проектах Cloudflare, HashiCorp и сотнях production-сервисов. Если откроешь вакансию Go-разработчика — с высокой вероятностью увидишь `sqlx` в стеке.
 
-### Документация
+**Документация:**
 
 - **GitHub:** https://github.com/jmoiron/sqlx
 - **Illustrated guide:** https://jmoiron.github.io/sqlx/
 
-> ⚠️ В задачах ниже мы **не объясняем** как работает каждый метод `sqlx` — разберись сам по документации. Это часть задания.
+> В задачах ниже мы **не объясняем** как работает каждый метод `sqlx` — разберись сам по документации. Это часть задания.
 
 ---
 
@@ -51,7 +51,7 @@ err := db.Get(&p, "SELECT * FROM products WHERE id = $1", id)
 
 Напиши программу, которая управляет таблицей `bookmarks` — простое хранилище ссылок.
 
-### Шаг 1 — Подготовь базу
+**Шаг 1 — Подготовь базу:**
 
 ```sql
 CREATE TABLE bookmarks (
@@ -62,7 +62,7 @@ CREATE TABLE bookmarks (
 );
 ```
 
-### Шаг 2 — Структура
+**Шаг 2 — Структура:**
 
 ```go
 type Bookmark struct {
@@ -73,7 +73,7 @@ type Bookmark struct {
 }
 ```
 
-### Шаг 3 — Функции
+**Шаг 3 — Функции:**
 
 Напиши 4 функции, каждая принимает `*sqlx.DB`:
 
@@ -84,7 +84,7 @@ type Bookmark struct {
 | `UpdateTitle(db, id, newTitle)` | `UPDATE` заголовка | Попробуй `NamedExec` или `MustExec` |
 | `Delete(db, id)` | `DELETE` по `id` | Проверь `RowsAffected` |
 
-### Шаг 4 — main
+**Шаг 4 — main:**
 
 ```go
 func main() {
@@ -118,7 +118,7 @@ all bookmarks:
   [3] LeetCode — https://leetcode.com
 ```
 
-### Требования
+**Требования:**
 
 - Используй `sqlx` + `lib/pq` (или `pgx`)
 - Подключение через `sqlx.Connect` — он сразу делает `Ping`, в отличие от `sql.Open`
@@ -165,7 +165,7 @@ func main() {
 }
 ```
 
-### Что нужно сделать
+**Что нужно сделать:**
 
 Перепиши код так, чтобы:
 
@@ -174,7 +174,7 @@ func main() {
 3. Все ресурсы корректно закрывались
 4. Пустой результат обрабатывался корректно
 
-### Подсказка
+**Подсказка:**
 
 Попробуй ввести `' OR '1'='1` в оригинальный код и подумай, что произойдёт.
 
@@ -184,7 +184,7 @@ func main() {
 
 Оберни работу с таблицей `products` в структуру-репозиторий.
 
-### Шаг 1 — Таблица
+**Шаг 1 — Таблица:**
 
 ```sql
 CREATE TABLE products (
@@ -195,7 +195,7 @@ CREATE TABLE products (
 );
 ```
 
-### Шаг 2 — Структура
+**Шаг 2 — Структура:**
 
 ```go
 type Product struct {
@@ -214,7 +214,7 @@ func NewProductRepo(db *sqlx.DB) *ProductRepo {
 }
 ```
 
-### Шаг 3 — Методы
+**Шаг 3 — Методы:**
 
 | Метод | Что делает | Подсказка по sqlx |
 |-------|-----------|-------------------|
@@ -224,7 +224,7 @@ func NewProductRepo(db *sqlx.DB) *ProductRepo {
 | `UpdatePrice(id int, price float64) error` | Обновить цену | Проверь `RowsAffected` |
 | `SoftDelete(id int) error` | `UPDATE in_stock=false` | Не `DELETE` — мягкое удаление |
 
-### Шаг 4 — main
+**Шаг 4 — main:**
 
 ```go
 func main() {
@@ -258,10 +258,11 @@ in stock:
   [2] Монитор — 25000.00 ₽
 ```
 
-### Требования
+**Требования:**
 
 - Вся логика БД — внутри методов `ProductRepo`, `main` не пишет SQL
 - Структуры с тегами `db:"..."` — пусть `sqlx` маппит сам
 - `GetByID` при отсутствии записи: `fmt.Errorf("product not found: %w", sql.ErrNoRows)` — чтобы вызывающий код мог проверить через `errors.Is`
 - Мягкое удаление — `UPDATE`, не `DELETE`
 - Попробуй использовать `NamedExec` хотя бы в одном методе — почувствуй разницу с позиционными `$1, $2`
+

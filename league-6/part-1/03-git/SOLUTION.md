@@ -313,20 +313,3 @@ git checkout main
 git pull origin main
 ```
 
----
-
-## Итоговая проверка
-
-```bash
-ls
-# README.md  about.txt  notes.md  contacts.md  needed.txt
-
-git log --oneline --graph --all
-
-git log --oneline | wc -l
-# не менее 12
-```
-
-На GitHub проверить:
-- Вкладка **Pull requests → Closed** — смерженный PR
-- Вкладка **Insights → Network** — история веток

@@ -1,7 +1,8 @@
 # Postman — практика
 
 Для выполнения заданий используй публичный API: `https://jsonplaceholder.typicode.com`
-После выполнения задания прикрепи скриншоты
+После выполнения задания прикрепи скриншоты.
+
 ---
 
 ## Часть 1 — Первый запрос
@@ -9,6 +10,8 @@
 1. Открой Postman и создай новую коллекцию с названием `Practice`
 2. Внутри коллекции создай запрос с названием `Get posts`
 3. Выбери метод `GET`, введи адрес `https://jsonplaceholder.typicode.com/posts`
+4. Отправь запрос. Обрати внимание на статус-код и тело ответа — ты увидишь список из 100 постов в JSON.
+
 ---
 
 ## Часть 2 — Query-параметры
@@ -69,14 +72,3 @@
 28. В поле Token введи любую строку, например `my-secret-token`
 29. Отправь GET-запрос на `https://jsonplaceholder.typicode.com/posts/1`
 
----
-
-## Итоговая проверка
-
-К концу задания в коллекции `Practice` должно быть 6 запросов:
-- `Get posts` — GET без параметров
-- `Get post by id` — GET с query-параметром
-- `Create post` — POST с JSON-телом
-- `Update post` — PUT с JSON-телом
-- `Delete post` — DELETE
-- `Authorized request` — Bearer Token

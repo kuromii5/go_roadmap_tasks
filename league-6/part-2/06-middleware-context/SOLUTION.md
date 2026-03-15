@@ -1,4 +1,4 @@
-# 🔑 Решения — Middleware, Context в Go (chi)
+# Решение — Middleware и Context
 
 ---
 

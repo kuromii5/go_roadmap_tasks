@@ -151,3 +151,4 @@ exit                        → завершить
 ```
 
 Ввод через `bufio.Scanner`, разбор через `strings.Fields`.
+

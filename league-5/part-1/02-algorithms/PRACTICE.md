@@ -486,32 +486,3 @@ exchange/
 └── stats.go
 ```
 
----
-
-## Итоговая проверка
-
-К концу задания у тебя должны быть файлы:
-
-```
-concurrency-practice/
-├── theory.md
-├── goroutines.go
-├── race.go
-├── wallet.go
-├── cache.go
-├── pipeline.go
-├── timeout.go
-├── leak.go
-└── exchange/
-    ├── main.go
-    ├── order.go
-    ├── generator.go
-    ├── matcher.go
-    └── stats.go
-```
-
-- Все файлы проходят `go run -race` без предупреждений
-- В `theory.md` даны ответы на все 7 вопросов и вывод `-race` из части 3
-- В `leak.go` есть комментарий с объяснением утечки
-
----

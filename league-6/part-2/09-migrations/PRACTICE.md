@@ -1,4 +1,4 @@
-# 🔄 Миграции в БД
+# Практика — Миграции
 
 > **Видео:** [Миграции](https://youtu.be/MNyNxloZR0k?t=22785)
 
@@ -23,7 +23,7 @@ goose -dir migrations postgres "postgres://user:pass@localhost:5432/mydb?sslmode
 goose -dir migrations postgres "..." down
 ```
 
-### Документация
+**Документация:**
 
 - **GitHub:** https://github.com/pressly/goose
 - **CLI reference:** https://pressly.github.io/goose/
@@ -34,22 +34,22 @@ goose -dir migrations postgres "..." down
 
 Ты проектируешь базу для сервиса заметок. Напиши **3 миграции** в формате goose SQL.
 
-### Миграция 1 — `001_create_users.sql`
+**Миграция 1 — `001_create_users.sql`:**
 
 UP: таблица `users` (id, email unique, name, created_at)
 DOWN: дропнуть таблицу
 
-### Миграция 2 — `002_create_notes.sql`
+**Миграция 2 — `002_create_notes.sql`:**
 
 UP: таблица `notes` (id, user_id FK, title, body, created_at, updated_at)
 DOWN: дропнуть таблицу
 
-### Миграция 3 — `003_add_notes_is_pinned.sql`
+**Миграция 3 — `003_add_notes_is_pinned.sql`:**
 
 UP: добавить колонку `is_pinned BOOLEAN DEFAULT false` в `notes`
 DOWN: удалить колонку
 
-### Формат файла goose
+**Формат файла goose:**
 
 ```sql
 -- +goose Up
@@ -59,7 +59,7 @@ CREATE TABLE ...;
 DROP TABLE ...;
 ```
 
-### Требования
+**Требования:**
 
 - Каждая миграция — отдельный файл в папке `migrations/`
 - `DOWN` должен корректно откатывать `UP`
@@ -82,7 +82,7 @@ DROP TABLE ...;
 6. SELECT * FROM notes;
 ```
 
-### Вопросы
+**Вопросы:**
 
 1. После шага 3 — что произойдёт с колонкой `is_pinned`? Данные в `notes` сохранятся?
 2. После шага 4 — что произойдёт с записью из шага 2?
@@ -112,3 +112,4 @@ make migrate-down
 make migrate-status
 make migrate-create NAME=add_index_on_email
 ```
+

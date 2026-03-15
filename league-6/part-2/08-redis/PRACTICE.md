@@ -1,4 +1,4 @@
-# 🔴 Redis + Go
+# Практика — Redis
 
 > **Видео:** [Redis основы](https://www.youtube.com/watch?v=GgRzHru9Hag)
 
@@ -8,7 +8,7 @@
 
 В видео ты работаешь с Redis напрямую через CLI (`redis-cli`). В Go для работы с Redis используют **[go-redis/redis](https://github.com/redis/go-redis)** — основную библиотеку, которую юзают все.
 
-### Быстрый старт
+**Быстрый старт:**
 
 ```go
 import "github.com/redis/go-redis/v9"
@@ -24,7 +24,7 @@ rdb.Set(ctx, "key", "value", 10*time.Minute)  // SET с TTL
 val, err := rdb.Get(ctx, "key").Result()       // GET
 ```
 
-### Что даёт
+**Что даёт:**
 
 - Все команды Redis доступны как методы: `Set`, `Get`, `HSet`, `LPush`, `SAdd`...
 - Пайплайны и транзакции
@@ -32,16 +32,16 @@ val, err := rdb.Get(ctx, "key").Result()       // GET
 - Автоматический пул соединений (не нужно как с `sql.DB` — уже встроено)
 - Каждый метод возвращает типизированный результат (`.Result()`, `.Int()`, `.Bool()`)
 
-### Кто использует
+**Кто использует:**
 
 go-redis — единственный серьёзный выбор для Go. 20k+ звёзд, поддерживается Redis Ltd. Альтернатив, о которых стоит говорить, нет.
 
-### Документация
+**Документация:**
 
 - **GitHub:** https://github.com/redis/go-redis
 - **Docs:** https://redis.uptrace.dev/
 
-> ⚠️ Redis должен быть запущен локально. Если ты проходил тему Docker — `docker run -d -p 6379:6379 redis:alpine`.
+> Redis должен быть запущен локально. Если ты проходил тему Docker — `docker run -d -p 6379:6379 redis:alpine`.
 
 ---
 
@@ -49,7 +49,7 @@ go-redis — единственный серьёзный выбор для Go. 2
 
 У тебя есть функция, которая «ходит в базу» за профилем пользователя (имитация через `time.Sleep`). Оберни её кэшем на Redis.
 
-### Готовый код
+**Готовый код:**
 
 ```go
 type UserProfile struct {
@@ -69,7 +69,7 @@ func getUserFromDB(id int) (*UserProfile, error) {
 }
 ```
 
-### Что нужно написать
+**Что нужно написать:**
 
 ```go
 func GetUser(ctx context.Context, rdb *redis.Client, id int) (*UserProfile, error)
@@ -81,7 +81,7 @@ func GetUser(ctx context.Context, rdb *redis.Client, id int) (*UserProfile, erro
 3. Если нет (cache miss) — сходи в `getUserFromDB`, сохрани в Redis с TTL 5 минут, верни
 4. Логируй в stdout: `cache hit: user:5` или `cache miss: user:5`
 
-### main
+**main:**
 
 ```go
 func main() {
@@ -101,7 +101,7 @@ cache hit: user:1 (1ms)
 cache miss: user:2 (500ms)
 ```
 
-### Требования
+**Требования:**
 
 - Сериализация через `encoding/json`
 - Ключ формата `user:<id>`
@@ -114,7 +114,7 @@ cache miss: user:2 (500ms)
 
 Напиши middleware для chi, который ограничивает количество запросов по IP-адресу: **не более 10 запросов в минуту**.
 
-### Как реализовать
+**Как реализовать:**
 
 Используй Redis-команду `INCR` + `EXPIRE`:
 1. Ключ: `ratelimit:<ip>`
@@ -122,13 +122,13 @@ cache miss: user:2 (500ms)
 3. Если счётчик стал 1 (первый запрос) — поставь `EXPIRE` 60 секунд
 4. Если счётчик > 10 — верни `429 Too Many Requests`
 
-### Сигнатура
+**Сигнатура:**
 
 ```go
 func RateLimitMiddleware(rdb *redis.Client) func(http.Handler) http.Handler
 ```
 
-### Тестовый сервер
+**Тестовый сервер:**
 
 ```go
 func main() {
@@ -144,7 +144,7 @@ func main() {
 }
 ```
 
-### Проверка
+**Проверка:**
 
 ```bash
 # Отправь 12 запросов подряд
@@ -163,7 +163,7 @@ Request 11: 429
 Request 12: 429
 ```
 
-### Требования
+**Требования:**
 
 - IP бери из `r.RemoteAddr` (для локалки будет `127.0.0.1:порт` — используй только IP-часть)
 - Заголовок `Retry-After: 60` в ответе 429
@@ -175,7 +175,7 @@ Request 12: 429
 
 Реализуй простое хранилище сессий на Redis. Без JWT — сессия живёт только в Redis.
 
-### Что нужно написать
+**Что нужно написать:**
 
 ```go
 type SessionStore struct {
@@ -195,7 +195,7 @@ func NewSessionStore(rdb *redis.Client, ttl time.Duration) *SessionStore
 | `Delete(ctx, sessionID) error` | Удаляет сессию (логаут) |
 | `Extend(ctx, sessionID) error` | Продлевает TTL сессии (юзер активен) |
 
-### Два эндпоинта для проверки
+**Два эндпоинта для проверки:**
 
 ```go
 // POST /login — принимает {"user_id": "42"}, создаёт сессию, возвращает session_id
@@ -203,7 +203,7 @@ func NewSessionStore(rdb *redis.Client, ttl time.Duration) *SessionStore
 // POST /logout — удаляет сессию
 ```
 
-### Проверка
+**Проверка:**
 
 ```bash
 # Логин
@@ -222,9 +222,10 @@ curl -X POST -H "X-Session-ID: $SID" http://localhost:8080/logout
 curl -H "X-Session-ID: $SID" http://localhost:8080/me
 ```
 
-### Требования
+**Требования:**
 
 - ID сессии — `uuid` (используй любой пакет или `crypto/rand`)
 - TTL — 30 минут
 - `Get` при отсутствии сессии — понятная ошибка, не паника
 - `Extend` — сбрасывает TTL заново (юзер кликнул → сессия продлена)
+

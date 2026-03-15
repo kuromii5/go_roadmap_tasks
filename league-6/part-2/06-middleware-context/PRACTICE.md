@@ -1,4 +1,4 @@
-# 🔗 Middleware, Context в Go
+# Практика — Middleware и Context
 
 > **Видео:** [Middleware и Context](https://youtu.be/2cxmJUJ2Ge0)
 
@@ -8,7 +8,7 @@
 
 В видео ты увидишь middleware на стандартном `net/http`. Это работает, но в продакшене большинство Go-проектов используют **[go-chi/chi](https://github.com/go-chi/chi)** — легковесный роутер, построенный поверх стандартной библиотеки.
 
-### Зачем chi, если есть net/http?
+**Зачем chi, если есть net/http?**
 
 Стандартный `http.ServeMux` не умеет:
 - URL-параметры (`/users/{id}`)
@@ -19,7 +19,7 @@
 // net/http — всё руками
 mux := http.NewServeMux()
 mux.HandleFunc("/users/", func(w http.ResponseWriter, r *http.Request) {
-    id := strings.TrimPrefix(r.URL.Path, "/users/")  // 🤮
+    id := strings.TrimPrefix(r.URL.Path, "/users/")
     // ...
 })
 ```
@@ -33,7 +33,7 @@ r.Get("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
 })
 ```
 
-### Что даёт chi
+**Что даёт chi:**
 
 - URL-параметры через `{name}`
 - `r.Use(middleware)` — глобальные middleware
@@ -42,16 +42,16 @@ r.Get("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
 - 100% совместим с `net/http` — `chi.Router` реализует `http.Handler`
 - Нулевые внешние зависимости
 
-### Кто использует
+**Кто использует:**
 
 chi — самый популярный роутер в Go-экосистеме. 19k+ звёзд на GitHub. Используется в Cloudflare, Heroku, 99designs. Его выбирают за то, что он не пытается быть фреймворком — просто роутер и middleware, без магии.
 
-### Документация
+**Документация:**
 
 - **GitHub:** https://github.com/go-chi/chi
 - **Примеры:** https://github.com/go-chi/chi/tree/master/_examples
 
-> ⚠️ В задачах ниже мы **не объясняем** API chi — разберись сам по документации и примерам. Это часть задания.
+> В задачах ниже мы **не объясняем** API chi — разберись сам по документации и примерам. Это часть задания.
 
 ---
 
@@ -59,7 +59,7 @@ chi — самый популярный роутер в Go-экосистеме.
 
 Дан готовый сервер на chi с двумя эндпоинтами. Твоя задача — написать 3 middleware и подключить их.
 
-### Готовый код (не меняй)
+**Готовый код (не меняй):**
 
 ```go
 package main
@@ -91,7 +91,7 @@ func main() {
 }
 ```
 
-### Middleware 1 — Logging
+**Middleware 1 — Logging:**
 
 Логирует каждый запрос **после** его выполнения:
 
@@ -102,7 +102,7 @@ GET /me 401 0.15ms
 
 Что нужно: метод, путь, статус-код, время выполнения. Для перехвата статус-кода тебе понадобится обернуть `http.ResponseWriter` — разберись как.
 
-### Middleware 2 — Auth
+**Middleware 2 — Auth:**
 
 Проверяет заголовок `Authorization`:
 - Если заголовок `Bearer valid-token-123` → кладёт `userID = "42"` в `context` и пропускает дальше
@@ -110,7 +110,7 @@ GET /me 401 0.15ms
 
 Для записи в context используй `context.WithValue` и `r.WithContext`.
 
-### Middleware 3 — RequestID
+**Middleware 3 — RequestID:**
 
 Генерирует уникальный ID запроса и:
 - Кладёт его в `context`
@@ -118,11 +118,11 @@ GET /me 401 0.15ms
 
 Для генерации ID используй `fmt.Sprintf("%d", time.Now().UnixNano())` или `uuid`.
 
-### Подключение
+**Подключение:**
 
 Подключи middleware в правильном порядке через `r.Use(...)`. Подумай — какой должен быть первым, какой последним, и почему.
 
-### Проверка через curl
+**Проверка через curl:**
 
 ```bash
 # Без токена — 401
@@ -135,7 +135,7 @@ curl -v -H "Authorization: Bearer valid-token-123" http://localhost:8080/me
 curl http://localhost:8080/ping
 ```
 
-### Бонус
+**Бонус:**
 
 Сделай так, чтобы `/ping` работал **без** авторизации, а `/me` — только с ней. Посмотри в документации chi, как применять middleware не глобально, а к группе роутов.
 
@@ -145,7 +145,7 @@ curl http://localhost:8080/ping
 
 Напиши эндпоинт, который имитирует тяжёлый запрос и корректно обрабатывает таймаут через `context`.
 
-### Что нужно сделать
+**Что нужно сделать:**
 
 ```go
 r.Get("/slow-query", func(w http.ResponseWriter, r *http.Request) {
@@ -169,7 +169,7 @@ func heavyOperation(ctx context.Context) (string, error) {
 }
 ```
 
-### Проверка
+**Проверка:**
 
 ```bash
 # Должен вернуть 504 — операция длится 3с, таймаут 2с
@@ -178,7 +178,7 @@ curl http://localhost:8080/slow-query
 
 Теперь поменяй таймаут на 5 секунд — запрос должен вернуть 200.
 
-### Дополнительно
+**Дополнительно:**
 
 Попробуй вместо ручного `context.WithTimeout` использовать `middleware.Timeout` из chi. В чём разница? Какой подход где уместен?
 
@@ -254,7 +254,7 @@ func main() {
 }
 ```
 
-### Что не работает
+**Что не работает:**
 
 Протестируй:
 
@@ -266,8 +266,9 @@ curl http://localhost:8080/dashboard
 curl -H "Authorization: Bearer secret" http://localhost:8080/dashboard
 ```
 
-### Подсказки
+**Подсказки:**
 
 1. Что произойдёт в `AuthMiddleware`, если токен неверный? Выполнится ли `next.ServeHTTP`?
 2. В каком порядке вызываются `r.Use(AuthMiddleware)` и `r.Use(LoggingMiddleware)`? Что логируется — все запросы или только авторизованные?
 3. Запрос без токена на `/dashboard` — какой статус он реально вернёт?
+
