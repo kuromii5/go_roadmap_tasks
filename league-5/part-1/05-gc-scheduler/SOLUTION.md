@@ -1,4 +1,4 @@
-# Практическое задание — Устройство map, slice и channel в Go
+# Решение — Устройство map, slice и channel в Go
 
 ---
 

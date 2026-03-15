@@ -1,3 +1,7 @@
+# Практика — Error handling
+
+---
+
 ## Задача 1 — Цепочка ошибок
 
 Ты пишешь загрузчик конфига для приложения. Конфиг читается из файла, парсится и валидируется. Каждый слой оборачивает ошибку предыдущего.
@@ -10,7 +14,7 @@ func parseConfig(data string) (map[string]string, error)
 func LoadConfig(path string) (map[string]string, error)
 ```
 
-### Правила
+**Правила:**
 
 - `readFile` — если `path` пустой, возвращает `ErrEmptyPath` (определи через `errors.New`)
 - `parseConfig` — получает строку вида `"key1=value1;key2=value2"`. Если встречает элемент без `=`, возвращает ошибку с `fmt.Errorf` и текстом `"invalid entry: <элемент>"`
@@ -27,7 +31,7 @@ errors.Is ErrEmptyPath: true
 full chain: load config: parse: invalid entry: broken
 ```
 
-### Подсказка
+**Подсказка:**
 
 `readFile` в этой задаче не читает реальный файл — если `path` не пустой, просто возвращай захардкоженную строку `"host=localhost;port=8080;broken"`.
 
@@ -87,7 +91,7 @@ func main() {
 }
 ```
 
-### Что нужно сделать
+**Что нужно сделать:**
 
 Перепиши код так, чтобы:
 
@@ -163,8 +167,16 @@ account not found: charlie
 transfer alice → bob: OK (alice: 70.00, bob: 80.00)
 ```
 
-### Требования
+**Требования:**
 
 - `InsufficientFundsError` реализует `error` интерфейс
 - Используй `errors.As` для извлечения кастомной ошибки — не type assertion напрямую
 - Дефицит (`deficit`) вычисляется из полей извлечённой ошибки, а не хардкодится
+
+---
+
+## Итоговая проверка
+
+- [ ] Задача 1: errors.Is находит ErrEmptyPath через любую глубину обёрток
+- [ ] Задача 2: все 5 ошибок найдены и исправлены, вывод совпадает с ожидаемым
+- [ ] Задача 3: errors.As извлекает InsufficientFundsError, deficit вычисляется из полей

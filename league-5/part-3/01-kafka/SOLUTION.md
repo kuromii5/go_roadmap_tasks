@@ -1,4 +1,4 @@
-# Solution — Kafka
+# Решение — Kafka
 
 ---
 
